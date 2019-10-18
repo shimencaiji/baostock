@@ -2,7 +2,7 @@
 @Description: 测试脚本
 @Author: 石门菜鸡
 @Date: 2019-10-18 15:11:34
-@LastEditTime: 2019-10-18 20:10:43
+@LastEditTime: 2019-10-18 20:22:19
 @LastEditors: Please set LastEditors
 '''
 import get_stock_k_data
@@ -12,6 +12,8 @@ import get_profit_data
 import get_operation_data
 import get_growth_data
 import get_balance_data
+import get_cash_flow_data
+import get_dupont_data
 '''
 @description:交易数据提取并写入数据库测试脚本 
 @param {type} 
@@ -221,11 +223,53 @@ def balance_data_years_to_mysql():
     stock_data_to_mysql.write_data_to_database(query_result,database_name,table_name,mode)
     
     return
+
+    '''
+@description: 单季度现金流量数据提取并保存至数据库
+@param {type} 
+@return: 
+'''
+def cash_flow_data_single_quarter_to_mysql():
+    stock_code='sh.601717'
+    stock_name='郑煤机'
+    year=2018
+    quarter=1
+
+    query_result=get_cash_flow_data.get_cash_flow_data(stock_code,stock_name,year,quarter)
+
+    database_name='baostock'
+    table_name=stock_code+'_'+'cash_flow'
+    mode='append'
+
+    stock_data_to_mysql.write_data_to_database(query_result,database_name,table_name,mode)
+
+    return
+
+'''
+@description: 数年现金流量数据提取并写入数据库测试脚本
+@param {type} 
+@return: 
+'''
+def cash_flow_data_years_to_mysql():
+    start_year='2009'
+    end_year='2019'
+    stock_code='sh.601717'
+    stock_name='郑煤机'
+
+    query_result=get_cash_flow_data.get_cash_flow_data_year(stock_code,stock_name,start_year,end_year)
+
+    database_name='baostock'
+    table_name=stock_code+'_'+'cash_flow'
+    mode='append'
+    
+    stock_data_to_mysql.write_data_to_database(query_result,database_name,table_name,mode)
+    
+    return
 #dividend_data_to_mysql()
 #profit_data_single_quarter_to_mysql()
 #profit_data_years_to_mysql()
 #operation_data_single_quarter_to_mysql()
 #growth_data_single_quarter_to_mysql()
 #growth_data_years_to_mysql()
-balance_data_years_to_mysql()
+cash_flow_data_years_to_mysql()
 #print('this message is from main function')
