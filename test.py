@@ -2,7 +2,7 @@
 @Description: 测试脚本
 @Author: 石门菜鸡
 @Date: 2019-10-18 15:11:34
-@LastEditTime: 2019-10-18 16:51:10
+@LastEditTime: 2019-10-18 17:04:25
 @LastEditors: Please set LastEditors
 '''
 import get_stock_k_data
@@ -47,3 +47,12 @@ def dividend_data_to_mysql():
     mode='append'
 
     stock_data_to_mysql.write_data_to_database(dividend_query_result,database_name,table_name,mode)
+
+
+def main():
+    dividend_data_to_mysql()
+    print('this message is from main function')
+
+
+if __name__ == '__main__':
+    main()
