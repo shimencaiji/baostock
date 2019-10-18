@@ -2,7 +2,7 @@
 @Description: 查询季度频率财务信息，提供2007年至今数据。 
 @Author: 石门菜鸡
 @Date: 2019-10-18 18:12:14
-@LastEditTime: 2019-10-18 19:22:39
+@LastEditTime: 2019-10-18 19:55:03
 @LastEditors: Please set LastEditors
 '''
 import baostock as bs
@@ -17,7 +17,7 @@ import pandas as pd
         } 
 @return: 
 '''
-def get_profit_data(stock_number,stock_name,year,quarter):
+def get_operation_data(stock_number,stock_name,year,quarter):
 
     print('==========================================================')
     print("开始进行: "+stock_name+"("+stock_number+")"+"的数据处理")
@@ -31,7 +31,7 @@ def get_profit_data(stock_number,stock_name,year,quarter):
 
 
     #####get stock data#####
-    rs=bs.query_profit_data(code=stock_number,year=year,quarter=quarter)
+    rs=bs.query_operation_data(code=stock_number,year=year,quarter=quarter)
 
     print('请求历史数据返回代码:'+rs.error_code)
     print('请求历史数据返回信息:'+rs.error_msg)
@@ -55,10 +55,10 @@ def get_profit_data(stock_number,stock_name,year,quarter):
         } 
 @return: DataFrame集合类型
 '''
-def get_profit_data_year(stock_number,stock_name,start_year,end_year):
+def get_operation_data_year(stock_number,stock_name,start_year,end_year):
     data_list=[]
     for y in range(int(start_year),int(end_year)+1):
         for  q in range(1,5):
-            rs=get_profit_data(stock_number,stock_name,y,q)
+            rs=get_operation_data(stock_number,stock_name,y,q)
             data_list.append(rs)
     return data_list
