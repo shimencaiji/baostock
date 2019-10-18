@@ -2,7 +2,7 @@
 @Description: 获取某只证券所有数据并写入数据库
 @Author: 石门菜鸡
 @Date: 2019-10-18 15:11:34
-@LastEditTime: 2019-10-19 00:56:13
+@LastEditTime: 2019-10-19 00:57:33
 @LastEditors: Please set LastEditors
 '''
 
@@ -115,7 +115,7 @@ def main():
         results=cursor.fetchall()
         for row in results:
             #print(row[1]+" "+row[2])
-            all_data_to_sql(row[1],row[2]))
+            all_data_to_sql(row[1],row[2])
     except:
         print ("Error: Unable to fetch data")
     db.close()
