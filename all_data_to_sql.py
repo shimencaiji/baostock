@@ -2,7 +2,7 @@
 @Description: 获取某只证券所有数据并写入数据库
 @Author: 石门菜鸡
 @Date: 2019-10-18 15:11:34
-@LastEditTime: 2019-10-19 00:30:15
+@LastEditTime: 2019-10-19 00:32:48
 @LastEditors: Please set LastEditors
 '''
 
@@ -33,7 +33,7 @@ def all_data_to_sql():
     #截至年份，默认为今年
     end_year=datetime.date.today().strftime('%Y')
     #股票代码
-    stock_code='sh.300294'
+    stock_code='sz.300294'
     #股票名称
     stock_name='博雅生物'
     #获取数据频率
