@@ -2,7 +2,7 @@
 @Description: 测试脚本
 @Author: 石门菜鸡
 @Date: 2019-10-18 15:11:34
-@LastEditTime: 2019-10-18 19:59:17
+@LastEditTime: 2019-10-18 20:10:43
 @LastEditors: Please set LastEditors
 '''
 import get_stock_k_data
@@ -11,6 +11,7 @@ import get_dividend_data
 import get_profit_data
 import get_operation_data
 import get_growth_data
+import get_balance_data
 '''
 @description:交易数据提取并写入数据库测试脚本 
 @param {type} 
@@ -179,10 +180,52 @@ def growth_data_years_to_mysql():
     
     return
 
+'''
+@description: 单季度偿债能力数据提取并保存至数据库
+@param {type} 
+@return: 
+'''
+def balance_data_single_quarter_to_mysql():
+    stock_code='sh.601717'
+    stock_name='郑煤机'
+    year=2018
+    quarter=1
+
+    query_result=get_balance_data.get_balance_data(stock_code,stock_name,year,quarter)
+
+    database_name='baostock'
+    table_name=stock_code+'_'+'balance'
+    mode='append'
+
+    stock_data_to_mysql.write_data_to_database(query_result,database_name,table_name,mode)
+
+    return
+
+'''
+@description: 数年偿债能力数据提取并写入数据库测试脚本
+@param {type} 
+@return: 
+'''
+def balance_data_years_to_mysql():
+    start_year='2009'
+    end_year='2019'
+    stock_code='sh.601717'
+    stock_name='郑煤机'
+
+    query_result=get_balance_data.get_balance_data_year(stock_code,stock_name,start_year,end_year)
+
+    database_name='baostock'
+    table_name=stock_code+'_'+'balance'
+    mode='append'
+    
+    stock_data_to_mysql.write_data_to_database(query_result,database_name,table_name,mode)
+    
+    return
 #dividend_data_to_mysql()
 #profit_data_single_quarter_to_mysql()
 #profit_data_years_to_mysql()
 #operation_data_single_quarter_to_mysql()
 #growth_data_single_quarter_to_mysql()
-growth_data_years_to_mysql()
+#growth_data_years_to_mysql()
+balance_data_years_to_mysql()
 #print('this message is from main function')
