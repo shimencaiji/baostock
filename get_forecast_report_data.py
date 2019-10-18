@@ -1,15 +1,15 @@
 '''
-@Description: 查询季度频率企业业绩快报信息，提供2007年至今数据。 
+@Description: 查询季度频率企业业绩预告信息，提供2007年至今数据。 
 @Author: 石门菜鸡
 @Date: 2019-10-18 18:12:14
-@LastEditTime: 2019-10-18 20:42:21
+@LastEditTime: 2019-10-18 20:46:57
 @LastEditors: Please set LastEditors
 '''
 import baostock as bs
 import pandas as pd
 
 '''
-@description: 获取指定股票季度频率业绩快报数据
+@description: 获取指定股票季度频率业绩预告数据
 @param {stock_number:股票代码
         stock_name:股票名称
         start_date:开始日期,str类型，为空时默认当前年
@@ -17,7 +17,7 @@ import pandas as pd
         } 
 @return: 
 '''
-def get_performance_express_data(stock_number,stock_name,start_date,end_date):
+def get_forecast_report_data(stock_number,stock_name,start_date,end_date):
 
     print('==========================================================')
     print("开始进行: "+stock_name+"("+stock_number+")"+"的数据处理")
@@ -31,7 +31,7 @@ def get_performance_express_data(stock_number,stock_name,start_date,end_date):
 
 
     #####get stock data#####
-    rs=bs.query_performance_express_report(stock_number,start_date,end_date)
+    rs=bs.query_forecast_report(stock_number,start_date,end_date)
 
     print('请求历史数据返回代码:'+rs.error_code)
     print('请求历史数据返回信息:'+rs.error_msg)
