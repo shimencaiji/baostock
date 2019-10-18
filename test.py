@@ -2,7 +2,7 @@
 @Description: 测试脚本
 @Author: 石门菜鸡
 @Date: 2019-10-18 15:11:34
-@LastEditTime: 2019-10-18 20:22:19
+@LastEditTime: 2019-10-18 21:49:28
 @LastEditors: Please set LastEditors
 '''
 import get_stock_k_data
@@ -224,11 +224,7 @@ def balance_data_years_to_mysql():
     
     return
 
-    '''
-@description: 单季度现金流量数据提取并保存至数据库
-@param {type} 
-@return: 
-'''
+
 def cash_flow_data_single_quarter_to_mysql():
     stock_code='sh.601717'
     stock_name='郑煤机'
