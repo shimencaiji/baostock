@@ -2,7 +2,7 @@
 @Description: 查询季度频率财务信息，提供2007年至今数据。 
 @Author: 石门菜鸡
 @Date: 2019-10-18 18:12:14
-@LastEditTime: 2019-10-18 19:22:39
+@LastEditTime: 2019-10-19 00:26:33
 @LastEditors: Please set LastEditors
 '''
 import baostock as bs
@@ -56,9 +56,23 @@ def get_profit_data(stock_number,stock_name,year,quarter):
 @return: DataFrame集合类型
 '''
 def get_profit_data_year(stock_number,stock_name,start_year,end_year):
+    print('==========================================================')
+    print("开始进行: "+stock_name+"("+stock_number+")"+"的数据处理")
+    print("尝试登陆baostock")
     data_list=[]
+    lg=bs.login(user_id="anonymous",password="123456")
+    if(lg.error_code == '0'):
+        print("登陆成功")
+    else:
+        print("登录失败")
     for y in range(int(start_year),int(end_year)+1):
         for  q in range(1,5):
-            rs=get_profit_data(stock_number,stock_name,y,q)
-            data_list.append(rs)
-    return data_list
+                #####get stock data#####
+                rs=bs.query_profit_data(code=stock_number,year=y,quarter=q)
+                while(rs.error_code=='0')&rs.next():
+                    data_list.append(rs.get_row_data())
+    result=pd.DataFrame(data_list,columns=rs.fields)
+    bs.logout()
+    print(stock_name+"("+stock_number+")"+"的数据处理完成")
+    print('==========================================================')
+    return result
