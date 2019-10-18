@@ -2,7 +2,7 @@
 @Description: 从baostock获取股票除权除息信息数据（预披露、预案、正式都已通过）。
 @Author: 石门菜鸡
 @Date: 2019-10-18 15:38:07
-@LastEditTime: 2019-10-18 17:05:59
+@LastEditTime: 2019-10-18 17:11:33
 @LastEditors: Please set LastEditors
 '''
 import baostock as bs
@@ -36,5 +36,6 @@ def get_dividend_data(stock_number,stock_name,start_year,end_year,yearType):
         while (rs_dividend.error_code == '0')& rs_dividend.next():
             rs_list.append(rs_dividend.get_row_data())
     
+    result=pd.DataFrame(rs_list,columns=rs_dividend.fields)
     bs.logout()
-    return rs_list
+    return result

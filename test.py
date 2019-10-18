@@ -2,7 +2,7 @@
 @Description: 测试脚本
 @Author: 石门菜鸡
 @Date: 2019-10-18 15:11:34
-@LastEditTime: 2019-10-18 17:04:25
+@LastEditTime: 2019-10-18 17:08:59
 @LastEditors: Please set LastEditors
 '''
 import get_stock_k_data
@@ -40,7 +40,7 @@ def dividend_data_to_mysql():
     stock_name='郑煤机'
     year_type='report'
 
-    dividend_query_result=get_dividend_data.get_dividend_data(stock_code,stock_name,start_year,end_year,year_type)
+    dividend_query_result=get_dividend_data.get_dividend_data(stock_code,stock_name,int(start_year),int(end_year),year_type)
 
     database_name='baostock'
     table_name=stock_code+'_'+'dividend'

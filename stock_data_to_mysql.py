@@ -2,7 +2,7 @@
 @Description: 将获取到的baostock数据写入数据库中
 @Author: 石门菜鸡
 @Date: 2019-10-18 10:17:06
-@LastEditTime: 2019-10-18 15:01:49
+@LastEditTime: 2019-10-18 17:17:22
 @LastEditors: Please set LastEditors
 '''
 import pandas as pd
@@ -24,5 +24,5 @@ def write_data_to_database(baostock_result,database_name,table_name,mode):
     database_engine=create_engine(sql_login_message+database_name+'?charset=utf8')
     print("尝试写入数据库")
     baostock_result.to_sql(table_name,database_engine,schema=database_name,if_exists=mode,index=False,index_label=False)
-    print("结果写入数据库：%s中 的表 %s",database_name,table_name)
+    print("结果写入数据库：%s中的表 %s"%(database_name,table_name))
     
