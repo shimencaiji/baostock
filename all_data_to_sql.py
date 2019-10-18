@@ -2,7 +2,7 @@
 @Description: 获取某只证券所有数据并写入数据库
 @Author: 石门菜鸡
 @Date: 2019-10-18 15:11:34
-@LastEditTime: 2019-10-19 00:25:00
+@LastEditTime: 2019-10-19 00:30:15
 @LastEditors: Please set LastEditors
 '''
 
@@ -33,9 +33,9 @@ def all_data_to_sql():
     #截至年份，默认为今年
     end_year=datetime.date.today().strftime('%Y')
     #股票代码
-    stock_code='sh.000001'
+    stock_code='sh.300294'
     #股票名称
-    stock_name='上证指数'
+    stock_name='博雅生物'
     #获取数据频率
     frequency='d'
     #复权标志
@@ -64,10 +64,9 @@ def all_data_to_sql():
 
     #######盈利数据######
     print("------------处理盈利数据...------------")
-    profit_query_result=get_profit_data.get_profit_data_year(stock_code,stock_name,start_year,end_year)
+    query_result=get_profit_data.get_profit_data_year(stock_code,stock_name,start_year,end_year)
     table_name=stock_code+'_'+'profit'
-    for rs in profit_query_result:
-        stock_data_to_mysql.write_data_to_database(rs,database_name,table_name,mode)
+    stock_data_to_mysql.write_data_to_database(query_result,database_name,table_name,mode)
     print("------------处理完成------------")
 
     #######经营数据######
