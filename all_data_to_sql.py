@@ -2,11 +2,12 @@
 @Description: 获取某只证券所有数据并写入数据库
 @Author: 石门菜鸡
 @Date: 2019-10-18 15:11:34
-@LastEditTime: 2019-10-19 00:32:48
+@LastEditTime: 2019-10-19 00:56:13
 @LastEditors: Please set LastEditors
 '''
 
 import datetime
+import MySQLdb
 
 import get_stock_k_data
 import stock_data_to_mysql
@@ -23,7 +24,7 @@ import get_index_stock
 import get_performance_express_data
 
 
-def all_data_to_sql():
+def all_data_to_sql(stock_code,stock_name):
     #开始日期，默认为2006-1-1，baostock平台只有该日期后的数据
     start_date='2006-1-1'
     #截止日期，默认为今日
@@ -33,9 +34,9 @@ def all_data_to_sql():
     #截至年份，默认为今年
     end_year=datetime.date.today().strftime('%Y')
     #股票代码
-    stock_code='sz.300294'
+    #stock_code='sz.300294'
     #股票名称
-    stock_name='博雅生物'
+    #stock_name='博雅生物'
     #获取数据频率
     frequency='d'
     #复权标志
@@ -106,8 +107,18 @@ def all_data_to_sql():
 
 
 def main():
-    all_data_to_sql()
-
+    db = MySQLdb.connect("localhost", "root", "891219", "baostock", charset='utf8')
+    cursor=db.cursor()
+    sql="SELECT * FROM sz50_stocks;"
+    try:
+        cursor.execute(sql)
+        results=cursor.fetchall()
+        for row in results:
+            #print(row[1]+" "+row[2])
+            all_data_to_sql(row[1],row[2]))
+    except:
+        print ("Error: Unable to fetch data")
+    db.close()
 
 if __name__ == '__main__':
     main()
