@@ -2,12 +2,13 @@
 @Description: 测试脚本
 @Author: 石门菜鸡
 @Date: 2019-10-18 15:11:34
-@LastEditTime: 2019-10-18 17:08:59
+@LastEditTime: 2019-10-18 19:12:10
 @LastEditors: Please set LastEditors
 '''
 import get_stock_k_data
 import stock_data_to_mysql
 import get_dividend_data
+import get_profit_data
 '''
 @description:交易数据提取并写入数据库测试脚本 
 @param {type} 
@@ -48,11 +49,47 @@ def dividend_data_to_mysql():
 
     stock_data_to_mysql.write_data_to_database(dividend_query_result,database_name,table_name,mode)
 
+'''
+@description: 单季度利润数据提取并写入数据库测试脚本
+@param {type} 
+@return: 
+'''
+def profit_data_single_quarter_to_mysql():
+    stock_code='sh.601717'
+    stock_name='郑煤机'
+    year=2018
+    quarter=1
 
-def main():
-    dividend_data_to_mysql()
-    print('this message is from main function')
+    profit_query_result=get_profit_data.get_profit_data(stock_code,stock_name,year,quarter)
+
+    database_name='baostock'
+    table_name=stock_code+'_'+'profit'
+    mode='append'
+
+    stock_data_to_mysql.write_data_to_database(profit_query_result,database_name,table_name,mode)
+
+    return
+
+def profit_data_years_to_mysql():
+    start_year='2009'
+    end_year='2019'
+    stock_code='sh.601717'
+    stock_name='郑煤机'
+
+    profit_query_result=get_profit_data.get_profit_data_year(stock_code,stock_name,start_year,end_year)
+
+    database_name='baostock'
+    table_name=stock_code+'_'+'profit'
+    mode='append'
+    
+    for rs in profit_query_result:
+        stock_data_to_mysql.write_data_to_database(rs,database_name,table_name,mode)
+    
+    return
 
 
-if __name__ == '__main__':
-    main()
+
+#dividend_data_to_mysql()
+#profit_data_single_quarter_to_mysql()
+profit_data_years_to_mysql()
+#print('this message is from main function')
