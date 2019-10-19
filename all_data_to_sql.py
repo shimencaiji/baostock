@@ -2,7 +2,7 @@
 @Description: 获取某只证券所有数据并写入数据库
 @Author: 石门菜鸡
 @Date: 2019-10-18 15:11:34
-@LastEditTime: 2019-10-19 00:57:33
+@LastEditTime: 2019-10-19 08:32:32
 @LastEditors: Please set LastEditors
 '''
 
@@ -45,9 +45,9 @@ def all_data_to_sql(stock_code,stock_name):
     year_type='report'
 
     #数据库名称，默认为baostock
-    database_name='baostock'
-    #写入数据库模式，默认为append
-    mode='append'
+    database_name='zz_500'
+    #写入数据库模式，默认为append。 三个模式：fail，若表存在，则不输出；replace：若表存在，覆盖原来表里的数据；append：若表存在，将数据写到原表的后面。默认为fail
+    mode='replace'
 
     #######交易数据######
     print("------------处理交易数据...------------")
@@ -107,9 +107,10 @@ def all_data_to_sql(stock_code,stock_name):
 
 
 def main():
+    # all_data_to_sql('sh.600276','恒瑞医药')
     db = MySQLdb.connect("localhost", "root", "891219", "baostock", charset='utf8')
     cursor=db.cursor()
-    sql="SELECT * FROM sz50_stocks;"
+    sql="SELECT * FROM zz500_stocks_copy1"
     try:
         cursor.execute(sql)
         results=cursor.fetchall()
@@ -117,7 +118,11 @@ def main():
             #print(row[1]+" "+row[2])
             all_data_to_sql(row[1],row[2])
     except:
+        f=open('D:/test.txt','a+')
+        f.write('\n indata error '+row[1])
+        f.close()
         print ("Error: Unable to fetch data")
+        pass
     db.close()
 
 if __name__ == '__main__':
