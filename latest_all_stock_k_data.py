@@ -6,7 +6,8 @@
 @LastEditors: Please set LastEditors
 '''
 import datetime
-import MySQLdb
+#import MySQLdb
+import pymysql
 
 import get_stock_k_data
 import get_basic_data
@@ -29,7 +30,7 @@ frequency='d'
 adjustflag='2'
 
 #写入数据库模式，默认为append。 三个模式：fail，若表存在，则不输出；replace：若表存在，覆盖原来表里的数据；append：若表存在，将数据写到原表的后面。默认为fail
-mode='append'
+mode='replace'
 
 
 def trade_day_judgement(specified_date):
@@ -41,7 +42,7 @@ def trade_day_judgement(specified_date):
 def latest_all_stock_k_data(specified_date):
 
 
-    db = MySQLdb.connect("localhost", "root", "891219", database_name_source, charset='utf8')
+    db = pymysql.connect("localhost", "root", "", database_name_source, charset='utf8')
     cursor=db.cursor()
     sql="SELECT * FROM "+stock_set_table_name
     cursor.execute(sql)

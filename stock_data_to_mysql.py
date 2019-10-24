@@ -9,7 +9,7 @@ import pandas as pd
 #import re
 from sqlalchemy import create_engine
 
-sql_login_message="mysql+pymysql://root:891219@localhost:3306/"
+sql_login_message="mysql+pymysql://root:@localhost:3306/"
 '''
 @description: 将Dataframe型数据写入数据库中
 @param {baostock_result:baostock查询结果

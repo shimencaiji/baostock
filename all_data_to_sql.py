@@ -7,7 +7,8 @@
 '''
 
 import datetime
-import MySQLdb
+#import MySQLdb
+import pymysql
 
 import get_stock_k_data
 import stock_data_to_mysql
@@ -23,6 +24,9 @@ import get_basic_data
 import get_index_stock
 import get_performance_express_data
 
+
+#数据库名称，默认为baostock
+database_name='hs300'
 
 def all_data_to_sql(stock_code,stock_name):
     #开始日期，默认为2006-1-1，baostock平台只有该日期后的数据
@@ -44,8 +48,7 @@ def all_data_to_sql(stock_code,stock_name):
     #年份类别，默认为"report":预案公告年份，可选项"operate":除权除息年份。
     year_type='report'
 
-    #数据库名称，默认为baostock
-    database_name='zz_500'
+
     #写入数据库模式，默认为append。 三个模式：fail，若表存在，则不输出；replace：若表存在，覆盖原来表里的数据；append：若表存在，将数据写到原表的后面。默认为fail
     mode='replace'
 
@@ -108,9 +111,9 @@ def all_data_to_sql(stock_code,stock_name):
 
 def main():
     # all_data_to_sql('sh.600276','恒瑞医药')
-    db = MySQLdb.connect("localhost", "root", "891219", "baostock", charset='utf8')
+    db = pymysql.connect("localhost", "root", "", "baostock", charset='utf8')
     cursor=db.cursor()
-    sql="SELECT * FROM zz500_stocks_copy1"
+    sql="SELECT * FROM "+database_name+"_stocks"
     try:
         cursor.execute(sql)
         results=cursor.fetchall()
@@ -118,9 +121,9 @@ def main():
             #print(row[1]+" "+row[2])
             all_data_to_sql(row[1],row[2])
     except:
-        f=open('D:/test.txt','a+')
-        f.write('\n indata error '+row[1])
-        f.close()
+        # f=open('C:\scripts\errorlog\errorlog.txt','a+')
+        # f.write('\n indata error '+row[1])
+        # f.close()
         print ("Error: Unable to fetch data")
         pass
     db.close()
