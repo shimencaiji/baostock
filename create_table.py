@@ -7,17 +7,32 @@ import mysql_info
 import pymysql
 
 
+
 def xlwt_workbook():
 
-    sql='select * from baostock.hs300_stocks limit 1000'
+    sql='select * from baostock.sz50_stocks limit 1000'
 
-    conn=pymysql.connect(mysql_info.host,mysql_info.user,mysql_info.pwd,mysql_info.database_name,char_set='utf8')
+    conn = pymysql.connect("localhost", "root", "", "baostock", charset='utf8')
     cursor=conn.cursor()
-    result=cursor.execute(sql)
-    print(result)
+    count=cursor.execute(sql)
+    print(count)
 
-    # workbook=xlwt.Workbook()
-    # sheet=workbook.add_sheet('analysis_table',True)
+    cursor.scroll(0,mode='absolute')  
+    results = cursor.fetchall()  
+    fields = cursor.description  
+
+    workbook=xlwt.Workbook()
+    sheet=workbook.add_sheet('analysis_table',True)
+
+    for field in range(0,len(fields)):  
+       sheet.write(0,field,fields[field][0])  
+
+    row = 1  
+    col = 0  
+    for row in range(1,len(results)+1):  
+        for col in range(0,len(fields)):  
+            sheet.write(row,col,u'%s'%results[row-1][col]) 
+    workbook.save('C:/scripts/analysis.xlsx')
 
 def create_workbook():
     workbook=xlsxwriter.Workbook('D:/new_excel111.xlsx')
@@ -41,5 +56,6 @@ def create_workbook():
 
 
 if __name__ == '__main__':
-    create_workbook()
+    xlwt_workbook()
+    # create_workbook()
     
